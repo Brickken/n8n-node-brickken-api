@@ -11,7 +11,7 @@ export class BrickkenApi implements ICredentialType {
 
   displayName = 'Brickken API';
 
-  icon: Icon = 'file:brickken.svg';
+  icon: Icon = 'file:brickkenApiV2.svg';
 
   documentationUrl = 'https://docs.brickken.com';
 
