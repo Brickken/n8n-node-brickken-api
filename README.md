@@ -47,7 +47,7 @@ npm install n8n-nodes-brickken-api
 
 This node requires Brickken API credentials:
 
-1. **API Key** - Your Brickken API key (get it from the Brickken dashboard)
+1. **API Key** - Your Brickken API key (ask it to Brickken technical support)
 2. **Environment** - Choose between:
    - **Sandbox** - For testing (uses `https://api-sandbox.brickken.com`)
    - **Production** - For live operations (uses `https://api.brickken.com`)
@@ -94,7 +94,6 @@ Token Type: EQUITY (or appropriate type)
 ## Documentation
 
 - [Brickken Documentation](https://docs.brickken.com)
-- [Brickken API Documentation](https://docs.brickken.com/api)
 - [n8n Documentation](https://docs.n8n.io)
 
 ## License
