@@ -1,0 +1,16 @@
+{
+  "node": "n8n-nodes-brickken-api-v2",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["Blockchain", "Finance", "Developer Tools"],
+  "resources": {
+    "credentialDocumentation": [
+      { "url": "https://docs.brickken.com" }
+    ],
+    "primaryDocumentation": [
+      { "url": "https://docs.brickken.com" },
+      { "url": "https://api.brickken.com" },
+      { "url": "https://api-sandbox.brickken.com" }
+    ]
+  }
+}

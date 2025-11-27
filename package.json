@@ -1,0 +1,68 @@
+{
+  "name": "n8n-nodes-brickken-api",
+  "version": "1.0.2",
+  "description": "n8n community node for Brickken API V2 - tokenization and STO operations on blockchain",
+  "license": "MIT",
+  "homepage": "https://docs.brickken.com",
+  "keywords": [
+    "n8n-community-node-package",
+    "brickken",
+    "tokenization",
+    "blockchain",
+    "sto",
+    "security-token-offering",
+    "real-world-assets",
+    "rwa"
+  ],
+  "author": {
+    "name": "Brickken",
+    "email": "support@brickken.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brickken/n8n-nodes-brickken-api.git"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "build:watch": "tsc --watch",
+    "bundle": "npm run build && node bundle.js",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "release": "n8n-node release",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/BrickkenApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/BrickkenApiV2/BrickkenApiV2.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "*",
+    "change-case": "4.1.2",
+    "esbuild": "^0.27.0",
+    "eslint": "9.32.0",
+    "prettier": "3.6.2",
+    "release-it": "^19.0.4",
+    "typescript": "5.9.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "overrides": {
+    "change-case": "4.1.2"
+  },
+  "dependencies": {
+    "ethers": "^6.15.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  }
+}

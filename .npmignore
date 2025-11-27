@@ -1,0 +1,21 @@
+# Source files
+*.ts
+!*.d.ts
+
+# Build config
+tsconfig.json
+.prettierrc.js
+.eslintrc.js
+
+# Development
+node_modules/
+.git/
+.vscode/
+
+# Documentation
+README_TEMPLATE.md
+
+# Tests
+test/
+*.test.ts
+*.spec.ts
