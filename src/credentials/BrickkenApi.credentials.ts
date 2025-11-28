@@ -3,57 +3,57 @@ import type {
   Icon,
   ICredentialTestRequest,
   ICredentialType,
-  INodeProperties,
-} from 'n8n-workflow';
+  INodeProperties
+} from "n8n-workflow";
 
 export class BrickkenApi implements ICredentialType {
-  name = 'brickkenApi';
+  name = "brickkenApi";
 
-  displayName = 'Brickken API';
+  displayName = "Brickken API";
 
-  icon: Icon = 'file:brickkenApiV2.svg';
+  icon: Icon = "file:brickkenApiV2.svg";
 
-  documentationUrl = 'https://docs.brickken.com';
+  documentationUrl = "https://docs.brickken.com";
 
   properties: INodeProperties[] = [
     {
-      displayName: 'API Key',
-      name: 'apiKey',
-      type: 'string',
+      displayName: "API Key",
+      name: "apiKey",
+      type: "string",
       typeOptions: { password: true },
-      default: '',
+      default: "",
       required: true,
-      description: 'Brickken API key to authenticate requests',
+      description: "Brickken API key to authenticate requests"
     },
     {
-      displayName: 'Environment',
-      name: 'environment',
-      type: 'options',
+      displayName: "Environment",
+      name: "environment",
+      type: "options",
       options: [
-        { name: 'Sandbox', value: 'sandbox' },
-        { name: 'Production', value: 'production' },
+        { name: "Sandbox", value: "sandbox" },
+        { name: "Production", value: "production" }
       ],
-      default: 'sandbox',
-      description: 'Choose which Brickken API environment to use',
-    },
+      default: "sandbox",
+      description: "Choose which Brickken API environment to use"
+    }
   ];
 
   authenticate: IAuthenticateGeneric = {
-    type: 'generic',
+    type: "generic",
     properties: {
       headers: {
         // Pass API key in required header
-        'x-api-key': '={{$credentials.apiKey}}',
-      },
-    },
+        "x-api-key": "={{$credentials.apiKey}}"
+      }
+    }
   };
 
   test: ICredentialTestRequest = {
     request: {
       baseURL:
         '={{$credentials.environment === "production" ? "https://api.brickken.com" : "https://api-sandbox.brickken.com"}}',
-      url: '/get-network-info',
-      method: 'GET',
-    },
+      url: "/get-network-info",
+      method: "GET"
+    }
   };
 }
