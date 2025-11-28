@@ -20,6 +20,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["credentials//*", "nodes//*"],
+  "include": ["credentials/**/*", "nodes/**/*"],
   "exclude": ["node_modules", "dist"]
 }
