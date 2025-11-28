@@ -1,1 +1,1 @@
-{"version":3,"file":"BrickkenApiV2.node.d.ts","sourceRoot":"","sources":["../../../nodes/BrickkenApiV2/BrickkenApiV2.node.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EACV,SAAS,EACT,oBAAoB,EACrB,MAAM,cAAc,CAAC;AAEtB,qBAAa,aAAc,YAAW,SAAS;IAC7C,WAAW,EAAE,oBAAoB,CA83B/B;CACH"}
+{"version":3,"file":"BrickkenApiV2.node.d.ts","sourceRoot":"","sources":["../../../src/nodes/BrickkenApiV2/BrickkenApiV2.node.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EACV,SAAS,EACT,oBAAoB,EACrB,MAAM,cAAc,CAAC;AAEtB,qBAAa,aAAc,YAAW,SAAS;IAC7C,WAAW,EAAE,oBAAoB,CA83B/B;CACH"}
