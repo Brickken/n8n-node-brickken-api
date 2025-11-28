@@ -5,7 +5,7 @@ class BrickkenApi {
     constructor() {
         this.name = 'brickkenApi';
         this.displayName = 'Brickken API';
-        this.icon = 'file:brickken.svg';
+        this.icon = 'file:brickkenApiV2.svg';
         this.documentationUrl = 'https://docs.brickken.com';
         this.properties = [
             {
