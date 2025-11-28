@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/brickken/n8n-nodes-brickken-api.git"
+    "url": "https://github.com/brickken/n8n-node-brickken-api"
   },
   "scripts": {
     "build": "n8n-node build && cp src/nodes/BrickkenApiV2/*.svg dist/nodes/BrickkenApiV2/ && cp src/credentials/*.svg dist/credentials/",
