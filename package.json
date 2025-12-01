@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-brickken-api",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "n8n community node for Brickken API V2 - tokenization and STO operations on blockchain",
   "license": "MIT",
   "homepage": "https://docs.brickken.com",
