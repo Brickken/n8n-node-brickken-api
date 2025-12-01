@@ -168,7 +168,6 @@ class BrickkenApiV2 {
                     displayName: "Payment Token Symbol",
                     name: "paymentTokenSymbol",
                     type: "string",
-                    typeOptions: { password: true },
                     default: "",
                     routing: { send: { type: "body", property: "paymentTokenSymbol" } },
                     displayOptions: {
@@ -225,7 +224,6 @@ class BrickkenApiV2 {
                     displayName: "Token Symbol",
                     name: "tokenSymbol",
                     type: "string",
-                    typeOptions: { password: true },
                     default: "",
                     description: "Symbol of the token",
                     routing: { send: { type: "body", property: "tokenSymbol" } },
@@ -254,7 +252,6 @@ class BrickkenApiV2 {
                     displayName: "Tokenizer Email",
                     name: "tokenizerEmail",
                     type: "string",
-                    typeOptions: { password: true },
                     default: "",
                     description: "Email address of the tokenizer creating the asset",
                     routing: { send: { type: "body", property: "tokenizerEmail" } },
@@ -355,7 +352,6 @@ class BrickkenApiV2 {
                     displayName: "Token Amount",
                     name: "tokenAmount",
                     type: "string",
-                    typeOptions: { password: true },
                     default: "",
                     required: true,
                     description: "Total number of tokens offered in the STO",
@@ -553,7 +549,6 @@ class BrickkenApiV2 {
                     displayName: "Tokenizer Address",
                     name: "tokenizerAddressApprove",
                     type: "string",
-                    typeOptions: { password: true },
                     default: "",
                     description: "Tokenizer address (required for approve in certain flows)",
                     routing: { send: { type: "body", property: "tokenizerAddress" } },
@@ -780,7 +775,6 @@ class BrickkenApiV2 {
                     displayName: "Token Symbol",
                     name: "tokenSymbolPatch",
                     type: "string",
-                    typeOptions: { password: true },
                     default: "",
                     required: true,
                     description: "Symbol of the token",
@@ -793,13 +787,12 @@ class BrickkenApiV2 {
                     displayName: "Token Logotype",
                     name: "tokenLogotype",
                     type: "string",
-                    typeOptions: { password: true },
                     default: "",
                     description: "Name of the binary property containing the token logotype image",
                     routing: {
                         send: {
                             type: "body",
-                            property: "tokenLogotype"
+                            property: "tokenLogotypeRef"
                         }
                     },
                     displayOptions: {
