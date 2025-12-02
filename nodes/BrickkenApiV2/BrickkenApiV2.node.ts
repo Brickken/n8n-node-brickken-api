@@ -646,6 +646,24 @@ export class BrickkenApiV2 implements INodeType {
         }
       },
       {
+        displayName: "Users To Mint Input Mode",
+        name: "userToMintInputMode",
+        type: "options",
+        options: [
+          { name: "Define Fields", value: "fields" },
+          { name: "JSON", value: "json" }
+        ],
+        default: "fields",
+        description: "Choose between defining users individually or providing a JSON array",
+        displayOptions: {
+          show: {
+            resource: ["transactions"],
+            operation: ["prepareTransactions"],
+            method: ["mintToken"]
+          }
+        }
+      },
+      {
         displayName: "Users To Mint",
         name: "userToMint",
         type: "collection",
@@ -704,7 +722,48 @@ export class BrickkenApiV2 implements INodeType {
           show: {
             resource: ["transactions"],
             operation: ["prepareTransactions"],
-            method: ["mintToken"]
+            method: ["mintToken"],
+            userToMintInputMode: ["fields"]
+          }
+        }
+      },
+      {
+        displayName: "Users To Mint (JSON)",
+        name: "userToMintJson",
+        type: "json",
+        default: '[{"amount":"","investorAddress":"","investorEmail":"","name":"","needKyc":false,"needWhitelist":false,"surname":""}]',
+        description: "JSON array of users to mint. Example: [{\"amount\":\"100\",\"investorAddress\":\"0x...\",\"investorEmail\":\"user@example.com\",\"name\":\"John\",\"needKyc\":true,\"needWhitelist\":true,\"surname\":\"Doe\"}]",
+        routing: {
+          send: {
+            type: "body",
+            property: "userToMint",
+            value: "={{JSON.parse($value)}}"
+          }
+        },
+        displayOptions: {
+          show: {
+            resource: ["transactions"],
+            operation: ["prepareTransactions"],
+            method: ["mintToken"],
+            userToMintInputMode: ["json"]
+          }
+        }
+      },
+      {
+        displayName: "Users To Whitelist Input Mode",
+        name: "userToWhitelistInputMode",
+        type: "options",
+        options: [
+          { name: "Define Fields", value: "fields" },
+          { name: "JSON", value: "json" }
+        ],
+        default: "fields",
+        description: "Choose between defining users individually or providing a JSON array",
+        displayOptions: {
+          show: {
+            resource: ["transactions"],
+            operation: ["prepareTransactions"],
+            method: ["whitelist"]
           }
         }
       },
@@ -752,7 +811,30 @@ export class BrickkenApiV2 implements INodeType {
           show: {
             resource: ["transactions"],
             operation: ["prepareTransactions"],
-            method: ["whitelist"]
+            method: ["whitelist"],
+            userToWhitelistInputMode: ["fields"]
+          }
+        }
+      },
+      {
+        displayName: "Users To Whitelist (JSON)",
+        name: "userToWhitelistJson",
+        type: "json",
+        default: '[{"whitelistStatus":"true","investorAddress":"","investorEmail":""}]',
+        description: "JSON array of users to whitelist. Example: [{\"whitelistStatus\":\"true\",\"investorAddress\":\"0x...\",\"investorEmail\":\"user@example.com\"}]",
+        routing: {
+          send: {
+            type: "body",
+            property: "userToWhitelist",
+            value: "={{JSON.parse($value)}}"
+          }
+        },
+        displayOptions: {
+          show: {
+            resource: ["transactions"],
+            operation: ["prepareTransactions"],
+            method: ["whitelist"],
+            userToWhitelistInputMode: ["json"]
           }
         }
       },
