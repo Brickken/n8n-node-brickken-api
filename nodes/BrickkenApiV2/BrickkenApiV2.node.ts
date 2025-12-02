@@ -806,7 +806,7 @@ export class BrickkenApiV2 implements INodeType {
         routing: {
           send: {
             type: "body",
-            property: "tokenLogotypeRef"
+            property: "tokenLogotype"
           }
         },
         displayOptions: {
