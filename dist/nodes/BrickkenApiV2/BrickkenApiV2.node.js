@@ -792,7 +792,7 @@ class BrickkenApiV2 {
                     routing: {
                         send: {
                             type: "body",
-                            property: "tokenLogotypeRef"
+                            property: "tokenLogotype"
                         }
                     },
                     displayOptions: {
