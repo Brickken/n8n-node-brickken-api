@@ -487,7 +487,7 @@ export class BrickkenApiV2 implements INodeType {
           show: {
             resource: ["transactions"],
             operation: ["prepareTransactions"],
-            method: ["newInvest", "claimTokens", "burnToken", "whitelist"]
+            method: ["newInvest", "claimTokens", "burnToken"]
           }
         }
       },

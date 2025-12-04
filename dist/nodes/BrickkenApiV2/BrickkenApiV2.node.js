@@ -478,7 +478,7 @@ class BrickkenApiV2 {
                         show: {
                             resource: ["transactions"],
                             operation: ["prepareTransactions"],
-                            method: ["newInvest", "claimTokens", "burnToken", "whitelist"]
+                            method: ["newInvest", "claimTokens", "burnToken"]
                         }
                     }
                 },
