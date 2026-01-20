@@ -1066,7 +1066,6 @@ export class BrickkenApiV2 implements INodeType {
         displayName: "Token Symbol",
         name: "tokenSymbol",
         type: "string",
-        typeOptions: { password: true },
         default: "",
         required: true,
         description: "Symbol of the token",
