@@ -5,14 +5,14 @@
  */
 
 const KECCAK_ROUNDS = 24;
-const KECCAK_RC = [
-  0x00000001n, 0x00008082n, 0x0000808an, 0x80008000n,
-  0x0000808bn, 0x80000001n, 0x80008081n, 0x00008009n,
-  0x0000008an, 0x00000088n, 0x80008009n, 0x8000000an,
-  0x8000808bn, 0x0000008bn, 0x00008089n, 0x00008003n,
-  0x00008002n, 0x00000080n, 0x0000800an, 0x8000000an,
-  0x80008081n, 0x00008080n, 0x80000001n, 0x80008008n,
-].map((x) => BigInt.asUintN(64, x | (x << 32n)));
+const KECCAK_RC: bigint[] = [
+  0x0000000000000001n, 0x0000000000008082n, 0x800000000000808an, 0x8000000080008000n,
+  0x000000000000808bn, 0x0000000080000001n, 0x8000000080008081n, 0x8000000000008009n,
+  0x000000000000008an, 0x0000000000000088n, 0x0000000080008009n, 0x000000008000000an,
+  0x000000008000808bn, 0x800000000000008bn, 0x8000000000008089n, 0x8000000000008003n,
+  0x8000000000008002n, 0x8000000000000080n, 0x000000000000800an, 0x800000008000000an,
+  0x8000000080008081n, 0x8000000000008080n, 0x0000000080000001n, 0x8000000080008008n,
+];
 
 const KECCAK_ROTC = [
   1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 2, 14, 27, 41, 56, 8, 25, 43, 62, 18, 39, 61, 20, 44,
@@ -242,7 +242,9 @@ function rlpEncodeLength(len: number, offset: number): Uint8Array {
   return new Uint8Array([offset + 55 + lenBytesArray.length, ...lenBytesArray]);
 }
 
-function rlpEncode(input: Uint8Array | Uint8Array[]): Uint8Array {
+type RLPInput = Uint8Array | RLPInput[];
+
+function rlpEncode(input: RLPInput): Uint8Array {
   if (input instanceof Uint8Array) {
     if (input.length === 1 && input[0] < 0x80) {
       return input;
@@ -408,16 +410,15 @@ export function signTransaction(tx: TransactionRequest, privateKeyHex: string): 
   return signLegacyTransaction(tx, privateKey, chainId);
 }
 
-function encodeAccessList(accessList?: Array<{ address: string; storageKeys: string[] }>): Uint8Array[] {
+function encodeAccessList(accessList?: Array<{ address: string; storageKeys: string[] }>): RLPInput[] {
   if (!accessList || accessList.length === 0) {
     return [];
   }
 
   return accessList.map((item) => {
     const address = hexToBytes(item.address);
-    const storageKeys = item.storageKeys.map((key) => hexToBytes(key));
-    const storageKeysEncoded = rlpEncode(storageKeys);
-    return rlpEncode([address, storageKeysEncoded]);
+    const storageKeys: Uint8Array[] = item.storageKeys.map((key) => hexToBytes(key));
+    return [address, storageKeys] as RLPInput;
   });
 }
 
@@ -429,10 +430,10 @@ function signEIP1559Transaction(tx: TransactionRequest, privateKey: bigint, chai
   const to = tx.to ? hexToBytes(tx.to) : new Uint8Array(0);
   const value = bigIntToMinBytes(toBigInt(tx.value));
   const data = tx.data ? hexToBytes(tx.data) : new Uint8Array(0);
-  const accessList = encodeAccessList(tx.accessList);
+  const accessListItems = encodeAccessList(tx.accessList);
   const chainIdBytes = bigIntToMinBytes(chainId);
 
-  const toSign: Uint8Array[] = [
+  const toSign: RLPInput = [
     chainIdBytes,
     nonce,
     maxPriorityFeePerGas,
@@ -441,7 +442,7 @@ function signEIP1559Transaction(tx: TransactionRequest, privateKey: bigint, chai
     to,
     value,
     data,
-    accessList.length > 0 ? rlpEncode(accessList) : new Uint8Array(0),
+    accessListItems,
   ];
 
   const rlpEncoded = rlpEncode(toSign);
@@ -453,7 +454,7 @@ function signEIP1559Transaction(tx: TransactionRequest, privateKey: bigint, chai
   const msgHash = keccak256(messageToSign);
   const { r, s, v } = sign(msgHash, privateKey);
 
-  const toSerialize: Uint8Array[] = [
+  const toSerialize: RLPInput = [
     chainIdBytes,
     nonce,
     maxPriorityFeePerGas,
@@ -462,7 +463,7 @@ function signEIP1559Transaction(tx: TransactionRequest, privateKey: bigint, chai
     to,
     value,
     data,
-    accessList.length > 0 ? rlpEncode(accessList) : new Uint8Array(0),
+    accessListItems,
     bigIntToMinBytes(BigInt(v)),
     stripLeadingZeros(bigIntToBytes(r, 32)),
     stripLeadingZeros(bigIntToBytes(s, 32)),
@@ -483,10 +484,10 @@ function signEIP2930Transaction(tx: TransactionRequest, privateKey: bigint, chai
   const to = tx.to ? hexToBytes(tx.to) : new Uint8Array(0);
   const value = bigIntToMinBytes(toBigInt(tx.value));
   const data = tx.data ? hexToBytes(tx.data) : new Uint8Array(0);
-  const accessList = encodeAccessList(tx.accessList);
+  const accessListItems = encodeAccessList(tx.accessList);
   const chainIdBytes = bigIntToMinBytes(chainId);
 
-  const toSign: Uint8Array[] = [
+  const toSign: RLPInput = [
     chainIdBytes,
     nonce,
     gasPrice,
@@ -494,7 +495,7 @@ function signEIP2930Transaction(tx: TransactionRequest, privateKey: bigint, chai
     to,
     value,
     data,
-    accessList.length > 0 ? rlpEncode(accessList) : new Uint8Array(0),
+    accessListItems,
   ];
 
   const rlpEncoded = rlpEncode(toSign);
@@ -506,7 +507,7 @@ function signEIP2930Transaction(tx: TransactionRequest, privateKey: bigint, chai
   const msgHash = keccak256(messageToSign);
   const { r, s, v } = sign(msgHash, privateKey);
 
-  const toSerialize: Uint8Array[] = [
+  const toSerialize: RLPInput = [
     chainIdBytes,
     nonce,
     gasPrice,
@@ -514,7 +515,7 @@ function signEIP2930Transaction(tx: TransactionRequest, privateKey: bigint, chai
     to,
     value,
     data,
-    accessList.length > 0 ? rlpEncode(accessList) : new Uint8Array(0),
+    accessListItems,
     bigIntToMinBytes(BigInt(v)),
     stripLeadingZeros(bigIntToBytes(r, 32)),
     stripLeadingZeros(bigIntToBytes(s, 32)),
