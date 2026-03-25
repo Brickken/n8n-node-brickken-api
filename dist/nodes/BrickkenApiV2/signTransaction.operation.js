@@ -23,10 +23,6 @@ async function signTransactionOperation() {
                 signedTransactions,
                 transactionHashes,
             };
-            if (signedTransactions.length === 1) {
-                output.signedTransaction = signedTransactions[0];
-                output.transactionHash = transactionHashes[0];
-            }
             returnData.push({
                 json: output,
                 pairedItem: { item: i },
