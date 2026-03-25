@@ -10,7 +10,7 @@
     "primaryDocumentation": [
       { "url": "https://docs.brickken.com" },
       { "url": "https://api.brickken.com" },
-      { "url": "https://api-sandbox.brickken.com" }
+      { "url": "https://api.sandbox.brickken.com" }
     ]
   }
 }

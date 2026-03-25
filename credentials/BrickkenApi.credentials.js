@@ -40,7 +40,7 @@ class BrickkenApi {
         };
         this.test = {
             request: {
-                baseURL: '={{$credentials.environment === "production" ? "https://api.brickken.com" : "https://api-sandbox.brickken.com"}}',
+                baseURL: '={{$credentials.environment === "production" ? "https://api.brickken.com" : "https://api.sandbox.brickken.com"}}',
                 url: "/get-network-info",
                 method: "GET"
             }

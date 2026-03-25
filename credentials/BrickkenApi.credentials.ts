@@ -51,7 +51,7 @@ export class BrickkenApi implements ICredentialType {
   test: ICredentialTestRequest = {
     request: {
       baseURL:
-        '={{$credentials.environment === "production" ? "https://api.brickken.com" : "https://api-sandbox.brickken.com"}}',
+        '={{$credentials.environment === "production" ? "https://api.brickken.com" : "https://api.sandbox.brickken.com"}}',
       url: "/get-network-info",
       method: "GET"
     }

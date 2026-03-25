@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BrickkenApiV2 = void 0;
+const n8n_workflow_1 = require("n8n-workflow");
 class BrickkenApiV2 {
     constructor() {
         this.description = {
@@ -14,8 +15,8 @@ class BrickkenApiV2 {
             defaults: {
                 name: "Brickken API"
             },
-            inputs: ["main"],
-            outputs: ["main"],
+            inputs: [n8n_workflow_1.NodeConnectionTypes.Main],
+            outputs: [n8n_workflow_1.NodeConnectionTypes.Main],
             usableAsTool: true,
             credentials: [
                 {
@@ -39,8 +40,8 @@ class BrickkenApiV2 {
                     type: "options",
                     noDataExpression: true,
                     options: [
-                        { name: "Transaction", value: "transactions" },
-                        { name: "Info", value: "info" }
+                        { name: "Info", value: "info" },
+                        { name: "Transaction", value: "transactions" }
                     ],
                     default: "transactions"
                 },
@@ -139,16 +140,16 @@ class BrickkenApiV2 {
                     type: "options",
                     options: [
                         { name: "Approve", value: "approve" },
-                        { name: "burnToken", value: "burnToken" },
-                        { name: "claimTokens", value: "claimTokens" },
-                        { name: "closeOffer", value: "closeOffer" },
-                        { name: "dividendDistribution", value: "dividendDistribution" },
-                        { name: "mintToken", value: "mintToken" },
-                        { name: "newInvest", value: "newInvest" },
-                        { name: "newSto", value: "newSto" },
-                        { name: "newTokenization", value: "newTokenization" },
-                        { name: "transferFrom", value: "transferFrom" },
-                        { name: "transferTo", value: "transferTo" },
+                        { name: "Burn Token", value: "burnToken" },
+                        { name: "Claim Tokens", value: "claimTokens" },
+                        { name: "Close Offer", value: "closeOffer" },
+                        { name: "Dividend Distribution", value: "dividendDistribution" },
+                        { name: "Mint Token", value: "mintToken" },
+                        { name: "New Invest", value: "newInvest" },
+                        { name: "New STO", value: "newSto" },
+                        { name: "New Tokenization", value: "newTokenization" },
+                        { name: "Transfer From", value: "transferFrom" },
+                        { name: "Transfer To", value: "transferTo" },
                         { name: "Whitelist", value: "whitelist" }
                     ],
                     default: "newTokenization",
@@ -986,7 +987,7 @@ class BrickkenApiV2 {
                         {
                             name: "Get STOs",
                             value: "getStos",
-                            action: "Get all st os by token symbol",
+                            action: "Get all STOs by token symbol",
                             description: "GET /get-stos",
                             routing: { request: { method: "GET", url: "/get-stos" } }
                         },
@@ -1046,7 +1047,6 @@ class BrickkenApiV2 {
                     displayName: "Token Symbol",
                     name: "tokenSymbol",
                     type: "string",
-                    typeOptions: { password: true },
                     default: "",
                     required: true,
                     description: "Symbol of the token",

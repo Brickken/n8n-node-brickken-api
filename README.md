@@ -49,7 +49,7 @@ This node requires Brickken API credentials:
 
 1. **API Key** - Your Brickken API key (ask it to Brickken technical support)
 2. **Environment** - Choose between:
-   - **Sandbox** - For testing (uses `https://api-sandbox.brickken.com`)
+   - **Sandbox** - For testing (uses `https://api.sandbox.brickken.com`)
    - **Production** - For live operations (uses `https://api.brickken.com`)
 
 ## Usage Example

@@ -1,4 +1,8 @@
-import type { INodeType, INodeTypeDescription } from "n8n-workflow";
+import {
+  INodeType,
+  INodeTypeDescription,
+  NodeConnectionTypes
+} from "n8n-workflow";
 
 export class BrickkenApiV2 implements INodeType {
   description: INodeTypeDescription = {
@@ -13,8 +17,8 @@ export class BrickkenApiV2 implements INodeType {
     defaults: {
       name: "Brickken API"
     },
-    inputs: ["main"],
-    outputs: ["main"],
+    inputs: [NodeConnectionTypes.Main],
+    outputs: [NodeConnectionTypes.Main],
     usableAsTool: true,
     credentials: [
       {
@@ -39,8 +43,8 @@ export class BrickkenApiV2 implements INodeType {
         type: "options",
         noDataExpression: true,
         options: [
-          { name: "Transaction", value: "transactions" },
-          { name: "Info", value: "info" }
+          { name: "Info", value: "info" },
+          { name: "Transaction", value: "transactions" }
         ],
         default: "transactions"
       },
@@ -142,16 +146,16 @@ export class BrickkenApiV2 implements INodeType {
         type: "options",
         options: [
           { name: "Approve", value: "approve" },
-          { name: "burnToken", value: "burnToken" },
-          { name: "claimTokens", value: "claimTokens" },
-          { name: "closeOffer", value: "closeOffer" },
-          { name: "dividendDistribution", value: "dividendDistribution" },
-          { name: "mintToken", value: "mintToken" },
-          { name: "newInvest", value: "newInvest" },
-          { name: "newSto", value: "newSto" },
-          { name: "newTokenization", value: "newTokenization" },
-          { name: "transferFrom", value: "transferFrom" },
-          { name: "transferTo", value: "transferTo" },
+          { name: "Burn Token", value: "burnToken" },
+          { name: "Claim Tokens", value: "claimTokens" },
+          { name: "Close Offer", value: "closeOffer" },
+          { name: "Dividend Distribution", value: "dividendDistribution" },
+          { name: "Mint Token", value: "mintToken" },
+          { name: "New Invest", value: "newInvest" },
+          { name: "New STO", value: "newSto" },
+          { name: "New Tokenization", value: "newTokenization" },
+          { name: "Transfer From", value: "transferFrom" },
+          { name: "Transfer To", value: "transferTo" },
           { name: "Whitelist", value: "whitelist" }
         ],
         default: "newTokenization",
@@ -1003,7 +1007,7 @@ export class BrickkenApiV2 implements INodeType {
           {
             name: "Get STOs",
             value: "getStos",
-            action: "Get all st os by token symbol",
+            action: "Get all STOs by token symbol",
             description: "GET /get-stos",
             routing: { request: { method: "GET", url: "/get-stos" } }
           },
@@ -1066,7 +1070,6 @@ export class BrickkenApiV2 implements INodeType {
         displayName: "Token Symbol",
         name: "tokenSymbol",
         type: "string",
-        typeOptions: { password: true },
         default: "",
         required: true,
         description: "Symbol of the token",
