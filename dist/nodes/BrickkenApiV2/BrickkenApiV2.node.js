@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BrickkenApiV2 = void 0;
 const n8n_workflow_1 = require("n8n-workflow");
+const signTransaction_operation_1 = require("./signTransaction.operation");
 class BrickkenApiV2 {
     constructor() {
         this.description = {
@@ -61,6 +62,12 @@ class BrickkenApiV2 {
                             routing: {
                                 request: { method: "POST", url: "/prepare-transactions" }
                             }
+                        },
+                        {
+                            name: "Sign Transaction",
+                            value: "signTransaction",
+                            action: "Sign transactions locally",
+                            description: "Sign one or more prepared transactions locally",
                         },
                         {
                             name: "Send Transactions",
@@ -830,13 +837,40 @@ class BrickkenApiV2 {
                 },
                 // Send Transactions parameters
                 {
+                    displayName: "Transaction Data",
+                    name: "transactionData",
+                    type: "json",
+                    default: '={{ $json.transactions ?? $json.transaction ?? $json }}',
+                    required: true,
+                    description: "Transaction object or array of transaction objects to sign locally.",
+                    displayOptions: {
+                        show: { resource: ["transactions"], operation: ["signTransaction"] }
+                    }
+                },
+                {
+                    displayName: "Private Key",
+                    name: "privateKey",
+                    type: "string",
+                    typeOptions: { password: true },
+                    default: "",
+                    required: true,
+                    description: "Wallet private key used to sign the transaction locally.",
+                    displayOptions: {
+                        show: { resource: ["transactions"], operation: ["signTransaction"] }
+                    }
+                },
+                {
                     displayName: "Signed Transactions",
                     name: "signedTransactions",
-                    type: "string",
-                    default: "",
+                    type: "json",
+                    default: '={{ $json.signedTransactions ?? [] }}',
                     description: "Array of signed transaction hex strings",
                     routing: {
-                        send: { type: "body", property: "signedTransactions" }
+                        send: {
+                            type: "body",
+                            property: "signedTransactions",
+                            value: "={{$value}}"
+                        }
                     },
                     displayOptions: {
                         show: { resource: ["transactions"], operation: ["sendTransactions"] }
@@ -846,7 +880,7 @@ class BrickkenApiV2 {
                     displayName: "Transaction ID",
                     name: "txId",
                     type: "string",
-                    default: "",
+                    default: '={{ $json.txId ?? $json.id ?? "" }}',
                     description: "Transaction ID returned from prepare-transactions",
                     routing: { send: { type: "body", property: "txId" } },
                     displayOptions: {
@@ -1202,6 +1236,11 @@ class BrickkenApiV2 {
                 }
                 // Get Investor Info - email parameter already defined above
             ]
+        };
+        this.customOperations = {
+            transactions: {
+                signTransaction: signTransaction_operation_1.signTransactionOperation
+            }
         };
     }
 }

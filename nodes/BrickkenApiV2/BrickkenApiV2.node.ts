@@ -3,6 +3,7 @@ import {
   INodeTypeDescription,
   NodeConnectionTypes
 } from "n8n-workflow";
+import { signTransactionOperation } from "./signTransaction.operation";
 
 export class BrickkenApiV2 implements INodeType {
   description: INodeTypeDescription = {
@@ -65,6 +66,12 @@ export class BrickkenApiV2 implements INodeType {
             routing: {
               request: { method: "POST", url: "/prepare-transactions" }
             }
+          },
+          {
+            name: "Sign Transaction",
+            value: "signTransaction",
+            action: "Sign transactions locally",
+            description: "Sign one or more prepared transactions locally",
           },
           {
             name: "Send Transactions",
@@ -845,13 +852,42 @@ export class BrickkenApiV2 implements INodeType {
 
       // Send Transactions parameters
       {
+        displayName: "Transaction Data",
+        name: "transactionData",
+        type: "json",
+        default: '={{ $json.transactions ?? $json.transaction ?? $json }}',
+        required: true,
+        description:
+          "Transaction object or array of transaction objects to sign locally.",
+        displayOptions: {
+          show: { resource: ["transactions"], operation: ["signTransaction"] }
+        }
+      },
+      {
+        displayName: "Private Key",
+        name: "privateKey",
+        type: "string",
+        typeOptions: { password: true },
+        default: "",
+        required: true,
+        description:
+          "Wallet private key used to sign the transaction locally.",
+        displayOptions: {
+          show: { resource: ["transactions"], operation: ["signTransaction"] }
+        }
+      },
+      {
         displayName: "Signed Transactions",
         name: "signedTransactions",
-        type: "string",
-        default: "",
+        type: "json",
+        default: '={{ $json.signedTransactions ?? [] }}',
         description: "Array of signed transaction hex strings",
         routing: {
-          send: { type: "body", property: "signedTransactions" }
+          send: {
+            type: "body",
+            property: "signedTransactions",
+            value: "={{$value}}"
+          }
         },
         displayOptions: {
           show: { resource: ["transactions"], operation: ["sendTransactions"] }
@@ -861,7 +897,7 @@ export class BrickkenApiV2 implements INodeType {
         displayName: "Transaction ID",
         name: "txId",
         type: "string",
-        default: "",
+        default: '={{ $json.txId ?? $json.id ?? "" }}',
         description: "Transaction ID returned from prepare-transactions",
         routing: { send: { type: "body", property: "txId" } },
         displayOptions: {
@@ -1236,5 +1272,11 @@ export class BrickkenApiV2 implements INodeType {
 
       // Get Investor Info - email parameter already defined above
     ]
+  };
+
+  customOperations = {
+    transactions: {
+      signTransaction: signTransactionOperation
+    }
   };
 }

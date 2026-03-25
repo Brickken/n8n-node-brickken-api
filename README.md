@@ -25,6 +25,7 @@ npm install n8n-nodes-brickken-api
 
 #### Transactions
 - **Prepare Transactions** - Create unsigned blockchain transactions
+- **Sign Transaction** - Sign one or more prepared transactions locally
 - **Send Transactions** - Submit signed transactions to the blockchain
 - **Patch Token Docs** - Update token documents and logotype
 
@@ -81,6 +82,12 @@ Name: Your Token Name
 Token Type: EQUITY (or appropriate type)
 ...
 ```
+
+### Example: Prepare -> Sign -> Send
+
+1. Use **Prepare Transactions** to create the unsigned payload.
+2. Use **Sign Transaction** in a second Brickken API node to sign the returned transaction object or array locally with your private key.
+3. Use **Send Transactions** in a third Brickken API node to submit the `signedTransactions` array together with the `txId`.
 
 ## Supported Blockchains
 

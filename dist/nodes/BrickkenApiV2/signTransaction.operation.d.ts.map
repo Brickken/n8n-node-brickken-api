@@ -1,0 +1,1 @@
+{"version":3,"file":"signTransaction.operation.d.ts","sourceRoot":"","sources":["../../../nodes/BrickkenApiV2/signTransaction.operation.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAEV,iBAAiB,EACjB,kBAAkB,EACnB,MAAM,cAAc,CAAC;AAWtB,wBAAsB,wBAAwB,CAC5C,IAAI,EAAE,iBAAiB,GACtB,OAAO,CAAC,kBAAkB,EAAE,EAAE,CAAC,CAuDjC"}
