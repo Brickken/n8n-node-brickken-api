@@ -155,6 +155,7 @@ class BrickkenApiV2 {
                         { name: "New Invest", value: "newInvest" },
                         { name: "New STO", value: "newSto" },
                         { name: "New Tokenization", value: "newTokenization" },
+                        { name: "New Tokenized Agent", value: "newTokenizedAgent" },
                         { name: "Transfer From", value: "transferFrom" },
                         { name: "Transfer To", value: "transferTo" },
                         { name: "Whitelist", value: "whitelist" }
@@ -200,6 +201,7 @@ class BrickkenApiV2 {
                             operation: ["prepareTransactions"],
                             method: [
                                 "newTokenization",
+                                "newTokenizedAgent",
                                 "newSto",
                                 "closeOffer",
                                 "mintToken",
@@ -298,7 +300,7 @@ class BrickkenApiV2 {
                         show: {
                             resource: ["transactions"],
                             operation: ["prepareTransactions"],
-                            method: ["newTokenization"]
+                            method: ["newTokenization", "newTokenizedAgent"]
                         }
                     }
                 },
@@ -639,6 +641,224 @@ class BrickkenApiV2 {
                             resource: ["transactions"],
                             operation: ["prepareTransactions"],
                             method: ["newTokenization"]
+                        }
+                    }
+                },
+                // Fields for newTokenizedAgent method
+                {
+                    displayName: "Owner Email",
+                    name: "ownerEmail",
+                    type: "string",
+                    default: "",
+                    required: true,
+                    description: "Email address of the agent owner (must be an existing tokenizer)",
+                    routing: { send: { type: "body", property: "ownerEmail" } },
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"]
+                        }
+                    }
+                },
+                {
+                    displayName: "Description",
+                    name: "agentDescription",
+                    type: "string",
+                    default: "",
+                    required: true,
+                    description: "Description of the tokenized agent",
+                    routing: { send: { type: "body", property: "description" } },
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"]
+                        }
+                    }
+                },
+                {
+                    displayName: "Image",
+                    name: "agentImage",
+                    type: "string",
+                    default: "",
+                    required: true,
+                    description: "Image URL for the tokenized agent",
+                    routing: { send: { type: "body", property: "image" } },
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"]
+                        }
+                    }
+                },
+                {
+                    displayName: "Services Input Mode",
+                    name: "servicesInputMode",
+                    type: "options",
+                    options: [
+                        { name: "Define Fields", value: "fields" },
+                        { name: "JSON", value: "json" }
+                    ],
+                    default: "fields",
+                    description: "Choose between defining services individually or providing a JSON array",
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"]
+                        }
+                    }
+                },
+                {
+                    displayName: "Services",
+                    name: "services",
+                    type: "fixedCollection",
+                    typeOptions: {
+                        multipleValues: true,
+                        multipleValueButtonText: "Add Service"
+                    },
+                    default: { serviceValues: [] },
+                    description: "Services provided by the tokenized agent",
+                    options: [
+                        {
+                            displayName: "Service",
+                            name: "serviceValues",
+                            values: [
+                                {
+                                    displayName: "Name",
+                                    name: "name",
+                                    type: "string",
+                                    default: "",
+                                    required: true,
+                                    description: "Name of the service"
+                                },
+                                {
+                                    displayName: "Endpoint",
+                                    name: "endpoint",
+                                    type: "string",
+                                    default: "",
+                                    required: true,
+                                    description: "Endpoint URL of the service"
+                                },
+                                {
+                                    displayName: "Version",
+                                    name: "version",
+                                    type: "string",
+                                    default: "",
+                                    description: "Version of the service"
+                                }
+                            ]
+                        }
+                    ],
+                    routing: {
+                        send: {
+                            type: "body",
+                            property: "services",
+                            value: "={{$value.serviceValues}}"
+                        }
+                    },
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"],
+                            servicesInputMode: ["fields"]
+                        }
+                    }
+                },
+                {
+                    displayName: "Services (JSON)",
+                    name: "servicesJson",
+                    type: "json",
+                    default: '[{"name":"","endpoint":"","version":""}]',
+                    description: "JSON array of services. Example: [{\"name\":\"chat\",\"endpoint\":\"https://api.example.com/chat\",\"version\":\"1.0\"}]",
+                    routing: {
+                        send: {
+                            type: "body",
+                            property: "services",
+                            value: "={{JSON.parse($value)}}"
+                        }
+                    },
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"],
+                            servicesInputMode: ["json"]
+                        }
+                    }
+                },
+                {
+                    displayName: "Supported Trust",
+                    name: "supportedTrust",
+                    type: "string",
+                    default: "",
+                    description: "Comma-separated list of supported trust mechanisms",
+                    routing: {
+                        send: {
+                            type: "body",
+                            property: "supportedTrust",
+                            value: '={{$value ? $value.split(",").map(s => s.trim()).filter(s => s) : []}}'
+                        }
+                    },
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"]
+                        }
+                    }
+                },
+                {
+                    displayName: "x402 Support",
+                    name: "x402Support",
+                    type: "boolean",
+                    default: false,
+                    description: "Whether the agent supports x402 payments",
+                    routing: { send: { type: "body", property: "x402Support" } },
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"]
+                        }
+                    }
+                },
+                {
+                    displayName: "Active",
+                    name: "agentActive",
+                    type: "boolean",
+                    default: true,
+                    description: "Whether the agent is active",
+                    routing: { send: { type: "body", property: "active" } },
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"]
+                        }
+                    }
+                },
+                {
+                    displayName: "Metadata (JSON)",
+                    name: "agentMetadata",
+                    type: "json",
+                    default: "",
+                    description: "Optional metadata object for the agent",
+                    routing: {
+                        send: {
+                            type: "body",
+                            property: "metadata",
+                            value: "={{$value ? JSON.parse($value) : undefined}}"
+                        }
+                    },
+                    displayOptions: {
+                        show: {
+                            resource: ["transactions"],
+                            operation: ["prepareTransactions"],
+                            method: ["newTokenizedAgent"]
                         }
                     }
                 },
